@@ -2,11 +2,15 @@
   "name": "14-rollingcoffeebackend",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Maia Federica Gutierrez",
   "license": "ISC",
-  "description": "backend del proyecto rollingcoffee"
+  "description": "backend del proyecto rollingcoffee",
+  "dependencies": {
+    "express": "^4.18.3"
+  }
 }
