@@ -2,6 +2,10 @@ import express from 'express';
 import 'dotenv/config' ; // permite procesar variable de entorno
 import cors from 'cors';
 import morgan from 'morgan';
+import productosRouter from './src/routes/producto.routes.js';
+import path from "path";
+import {fileURLToPath} from 'url';
+import './src/database/database.js'
 
 console.log("hola amigos")
 
@@ -16,12 +20,18 @@ app.listen(app.get('port'), ()=>{
 app.use(cors()); // permite conexiones remotas
 app.use(morgan('dev'));//
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));;
+app.use(express.urlencoded({extended:true}));
 //todo : configurar index.html
-
+const __filename = fileURLToPatch(import.meta.url);
+const __dirname = path.dirname(__filename);
+console.log(__filename)
+console.log(path.join(__dirname, '/public'));
+app.use(express.static(path.join(__dirname, '/public')))
 //3_ configurar las rutas
 
-app.get('/nuevo/producto', (req, res)=>{
-    console.log('aqui obtener lista de todos los productos');
-    res.send('Aqui enviaremos la lista de productos')
-})
+//app.get('/nuevo/producto', (req, res)=>{
+ //   console.log('aqui obtener lista de todos los productos');
+ //   res.send('Aqui enviaremos la lista de productos')
+//})
+
+app.use('/api', productosRouter);
