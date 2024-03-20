@@ -19,7 +19,7 @@ export const obtenerProducto = async(req, res) => {
      const productoBuscado = await Producto.findById(req.params.id)
      // si no existe contestar con status 404
      if (!productoBuscado){
-        return res.status(404).json({mensaje:" El id enviadono corresponde a ningun producto"})
+        return res.status(404).json({mensaje:" El id enviado corresponde a ningun producto"})
      }
      // si existe el producto enviarlo al frontend, status 200
      res.status(200).json(productoBuscado)
