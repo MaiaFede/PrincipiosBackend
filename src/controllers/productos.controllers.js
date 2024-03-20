@@ -1,22 +1,49 @@
-export const listarProductos = (req, res)=>{
-    console.log('aqui obtener lista de todos los productos');
-    res.send('Aqui enviaremos la lista de productos')
-};
+import Producto from "../database/models/producto.js";
 
-export const crearProductos = async (req, res)=>{
-    try{
-        //todo: validar los datos del body
-        //crear un producto basado en el Modelo Producto
-const productoNuevo = new Producto (req.body);
-//pedir a la BD crear el producto
-await productoNuevo.save();
-//enviar una respuesta cuando puedo crear efectivamente el producto 201
-res.status (201). json({mensaje: 'El producto fue creado correctamente'})
-}catch (error) {
-//enviar una respuesta de error
-console.error(error);
-res.status(500).json({
-mensaje: "Error al crear el producto"
-})
-}
-}  
+export const listarProductos = async(req, res) => {
+    try {
+     //pedir a la bd la lista de todos los productos
+     const productos = await Producto.find()
+     //responder al frontend con el array de productos
+     res.status(200).json(productos)
+    } catch (err) {
+     console.error(err);
+     res.status(400).json({mensaje:'Error al buscar los productos'})
+    }
+   };
+
+export const obtenerProducto = async(req, res) => {
+    try {
+     //VERIFICAR SI EL PRODUCTO existe con el id correspondiente
+     console.log(req.params.id)
+     const productoBuscado = await Producto.findById(req.params.id)
+     // si no existe contestar con status 404
+     if (!productoBuscado){
+        return res.status(404).json({mensaje:" El id enviadono corresponde a ningun producto"})
+     }
+     // si existe el producto enviarlo al frontend, status 200
+     res.status(200).json(productoBuscado)
+    } catch (err) {
+     console.error(err);
+     res.status(400).json({mensaje:'Error al obtener los productos'})
+    }
+   };
+
+   export const crearProducto = async(req, res)=>{
+    try {
+      //todo: validar los datos del body
+      //crear un producto basado en el Modelo Producto
+      const productoNuevo = new Producto(req.body);
+      //pedir a la BD crear el producto
+      await productoNuevo.save();
+      //enviar una respuesta cuando puedo crear efectivamente el producto 201
+      console.info(req.body)
+      res.status(201).json({mensaje: 'El producto fue creado correctamente'})
+    } catch (error) {
+      //enviar una respuesta de error
+      console.error(error);
+      res.status(500).json({
+        mensaje: 'Error al crear el producto'
+      })
+    }  
+  }

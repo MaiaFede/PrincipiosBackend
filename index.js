@@ -4,7 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import productosRouter from './src/routes/producto.routes.js';
 import path from "path";
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
 import './src/database/database.js'
 
 console.log("hola amigos")
@@ -13,7 +13,7 @@ console.log("hola amigos")
 const app = express();
 app.set ('port', process.env.PORT || 4000);
 app.listen(app.get('port'), ()=>{
-    console.log('Estoy en el puerto '+ app.get('port'))
+    console.info('Estoy en el puerto '+ app.get('port'))
 })
 
 //2- Configurar los middlewares
@@ -22,7 +22,7 @@ app.use(morgan('dev'));//
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 //todo : configurar index.html
-const __filename = fileURLToPatch(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 console.log(__filename)
 console.log(path.join(__dirname, '/public'));
