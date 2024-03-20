@@ -47,3 +47,19 @@ export const obtenerProducto = async(req, res) => {
       })
     }  
   }
+  export const editarProducto = async(req, res) => {
+    try {
+    
+     const productoBuscado = await Producto.findById(req.params.id)
+     // si no existe contestar con status 404
+     if (!productoBuscado){
+        return res.status(404).json({mensaje:" El id enviado corresponde a ningun producto"})
+     }
+     // modificar el producto 
+    await Producto.findByIdAndUpdate(req.params.id, req.body)
+    res.status(200).json({mensaje:" El producto fue editado correctamente"})
+    } catch (err) {
+     console.error(err);
+     res.status(500).json({mensaje:'Error al obtener los productos'})
+    }
+   };
